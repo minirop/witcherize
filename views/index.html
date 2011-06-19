@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<title>{TITLE}</title>
+		<style type="text/css">
+		body
+		{
+			text-align: center;
+		}
+		
+		a
+		{
+			color: black;
+			text-decoration: none;
+		}
+		
+		#menu
+		{
+			text-align: center;
+			margin: 0;
+			padding: 0;
+		}
+		
+		#menu li
+		{
+			display: inline;
+			padding: 5px;
+			margin: 5px;
+		}
+		</style>
+	</head>
+	<body>
+		<h1>Strike Witches</h1>
+		<ul id="menu">
+			<li><a href="{ROOT_PATH}/account" title="">My Account</a></li>
+			<li><a href="{ROOT_PATH}/post" title="">Browse</a></li>
+			<li><a href="{ROOT_PATH}/faq" title="">FAQ</a></li>
+		</ul>
+		<form action="{ROOT_PATH}/search" method="post">
+			<input type="text" name="keyword" /> <input type="submit" value="Rechercher" />
+		</form>
+		<foreach array="{$CNT}">
+			<img src="{ROOT_PATH}/images/{CNT.value}.gif" />
+		</foreach>
+	</body>
+</html>

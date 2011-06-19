@@ -1,0 +1,10 @@
+<?php
+$config['host'] = 'localhost';
+$config['port'] = '3306';
+$config['database'] = 'DATABASE';
+$config['user'] = 'root';
+$config['password'] = '';
+$config['title'] = 'My Website';
+$config['root_path'] = '/';
+$config['ipp'] = 20; /* images per page */
+?>

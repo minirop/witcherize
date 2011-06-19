@@ -1,0 +1,161 @@
+*
+{
+	margin: 0;
+	padding: 0;
+}
+
+a
+{
+	color: #006FFA;
+	text-decoration: none;
+}
+
+input[type="submit"]
+{
+	padding: 1px 5px;
+}
+
+#main
+{
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#main th
+{
+	font-size: 40px;
+	text-align: left;
+	padding-left: 10px;
+}
+
+#main td
+{
+	vertical-align: top;
+}
+
+#main td#footer
+{
+	border-top: 1px black solid;
+	text-align: center;
+	font-size: 12px;
+}
+
+#main td#image-rows
+{
+	padding: 15px;
+}
+
+#main td#image-rows .outline-image
+{
+	display: inline-block;
+	width: 180px;
+	height: 180px;
+	text-align: center;
+}
+
+#main td#tags
+{
+	border-right: 1px black solid;
+	width: 230px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#main td#tabs
+{
+	border-bottom: 1px black solid;
+}
+
+#main td#tabs span
+{
+	display: inline-block;
+	border-top: 1px black solid;
+	border-left: 1px black solid;
+	border-right: 1px black solid;
+	padding: 1px 6px;
+	margin-left: 5px;
+}
+
+#main td#tabs span:hover
+{
+	background-color: #DDD;
+}
+
+#main td#tabs span a
+{
+	color: black;
+}
+
+#main td#tabs span.active
+{
+	background-color: black;
+	color: white;
+}
+
+#main td#tabs span.active a
+{
+	color: white;
+}
+
+#tag-list
+{
+	margin-left: 25px;
+}
+
+#tag-list li
+{
+	list-style-type: none;
+}
+
+#search
+{
+	padding: 10px;
+	text-align: center;
+}
+
+#message
+{
+	font-weight: bold;
+	font-size: 30px;
+	text-align: center;
+}
+
+#error
+{
+	padding: 20px;
+	font-size: 50px;
+	text-align: center;
+}
+
+img
+{
+	vertical-align: bottom;
+}
+
+#pagination
+{
+	text-align: center;
+}
+
+#pagination span
+{
+	display: inline-block;
+	border: 1px black solid;
+	min-width: 21px;
+	padding: 0 2px;
+	height: 25px;
+	font-size: 16px;
+	line-height: 25px;
+	text-align: center;
+}
+
+#pagination span.active
+{
+	background-color: black;
+	color: white;
+}
+
+.count
+{
+	color: #A0A0A0;
+}

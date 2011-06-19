@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<title>{TITLE}</title>
+		<link href="{ROOT_PATH}/styles/base.css" rel="stylesheet" type="text/css" media="all" />
+		<link href="{ROOT_PATH}/styles/default.css" rel="stylesheet" type="text/css" media="all" />
+	</head>
+	<body>
+		<table id="main">
+			<tr>
+				<th colspan="2">{TITLE}
+					<if cond="!empty({$SUB_TITLE})">
+						/ {SUB_TITLE|desunderscored}
+					</if>
+				</th>
+			</tr>
+			<tr>
+				<td colspan="2" id="tabs">
+					<span<if cond="{$IN_ACCOUNT} == true"> class="active"</if>><a href="{ROOT_PATH}/account" title="">My Account</a></span>
+					<span<if cond="{$IN_POST} == true"> class="active"</if>><a href="{ROOT_PATH}/post" title="">Posts</a></span>
+					<span<if cond="{$IN_FAQ} == true"> class="active"</if>><a href="{ROOT_PATH}/faq" title="">FAQ</a></span>
+				</td>
+			</tr>
+			<tr>
+				<require tpl="{$MODULE}" />
+			</tr>
+			<tr>
+				<td colspan="2" id="footer">
+					powered by <a href="http://www.witcherize.it" title="">witcherize</a> v0.1
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>
