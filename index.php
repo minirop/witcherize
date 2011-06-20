@@ -2,7 +2,6 @@
 session_start();
 
 require('config.php');
-require('Session.php');
 require('Talus_TPL/Talus_TPL.php');
 
 //mb_internal_encoding('utf-8');
