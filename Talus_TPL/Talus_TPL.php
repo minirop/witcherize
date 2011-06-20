@@ -22,7 +22,7 @@
  * @copyright ©Talus, Talus' Works 2006+
  * @link http://www.talus-works.net Talus' Works
  * @license http://www.gnu.org/licenses/lgpl.html LGNU Public License 2+
- * @version $Id: a6e09207d9f8529687428d2e1506d152f45932fe $
+ * @version $Id: ff45bed5ee642896f00d201ec1d13cda46c35a75 $
  */
 
 if (!defined('PHP_EXT')) {
@@ -60,7 +60,7 @@ class Talus_TPL {
   const
     INCLUDE_TPL = 0,
     REQUIRE_TPL = 1,
-    VERSION = '1.10.0';
+    VERSION = '1.10.3';
 
   /**
    * Initialisation.

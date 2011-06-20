@@ -22,7 +22,7 @@
  * @copyright ©Talus, Talus' Works 2008+
  * @link http://www.talus-works.net Talus' Works
  * @license http://www.gnu.org/licenses/gpl.html GNU Public License 2+
- * @version $Id: 1c046edb832285d77bd25c1df81bb424912fe2e6 $
+ * @version $Id: 29684de80368b24cfe5a7764234f1988ae2d0f40 $
  */
 
 // -- If PHP < 5.3, emulating E_USER_DEPRECATED
@@ -52,7 +52,7 @@ class Talus_TPL_Parser implements Talus_TPL_Parser_Interface {
 
     // -- Regex used
     REGEX_PHP_ID = '[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*', // PHP Identifier
-    REGEX_ARRAYS = '\[(?!]})(?:.*?)]'; // PHP Arrays
+    REGEX_ARRAYS = '(?:\[[^]]+?])*'; // PHP Arrays
 
   /**
    * Initialisation
@@ -103,14 +103,14 @@ class Talus_TPL_Parser implements Talus_TPL_Parser_Interface {
     $recursives = array(
       // -- Block variables ({block.VAR1}, ...)
       // -- EX REGEX ; [a-z_\xe0-\xf6\xf8-\xff][a-z0-9_\xe0-\xf6\xf8-\xff]*
-      '`\{(' . self::REGEX_PHP_ID . ')\.((?!val(?:ue)?)' . self::REGEX_PHP_ID . ')(' . self::REGEX_ARRAYS . ')?}`' => '{$1.value[\'$2\']$3}',
-      '`\{\$(' . self::REGEX_PHP_ID . ')\.((?!val(?:ue)?)' . self::REGEX_PHP_ID . ')(' . self::REGEX_ARRAYS . ')?}`' => '{$$1.value[\'$2\']$3}'
+      '`\{(' . self::REGEX_PHP_ID . ')\.(?!val(?:ue)?)(' . self::REGEX_PHP_ID . ')(' . self::REGEX_ARRAYS . ')}`' => '{$1.value[\'$2\']$3}',
+      '`\{\$(' . self::REGEX_PHP_ID . ')\.(?!val(?:ue)?)(' . self::REGEX_PHP_ID . ')(' . self::REGEX_ARRAYS . ')}`' => '{$$1.value[\'$2\']$3}'
      );
 
     // -- Filter's transformations
     if ($this->parameter('parse') & self::FILTERS) {
       $matches = array();
-      while (preg_match('`\{(\$?' . self::REGEX_PHP_ID . '(?:\.value(?:' . self::REGEX_ARRAYS . ')?|key|current|size)?)\|((?:' . self::REGEX_PHP_ID . '(?::.+?)*\|?)+)}`', $script, $matches)) {
+      while (preg_match('`\{(\$?' . self::REGEX_PHP_ID . '(?:\.value' . self::REGEX_ARRAYS . '|key|current|size|' . self::REGEX_ARRAYS . ')?)\|((?:' . self::REGEX_PHP_ID . '(?::.+?)*\|?)+)}`', $script, $matches)) {
         $script = str_replace($matches[0], $this->_filters($matches[1], $matches[2]), $script);
       }
     }
@@ -123,7 +123,7 @@ class Talus_TPL_Parser implements Talus_TPL_Parser_Interface {
 
     // -- <foreach> tags
     $script = preg_replace_callback('`<' . $nspace . 'foreach ar(?:ra)?y="\{\$(' . self::REGEX_PHP_ID . ')}">`', array($this, '_foreach'), $script);
-    $script = preg_replace_callback('`<' . $nspace . 'foreach ar(?:ra)?y="\{\$(' . self::REGEX_PHP_ID . '(?:\.value(?:' . self::REGEX_ARRAYS . ')?)?)}" as="\{\$(' . self::REGEX_PHP_ID . ')}">`', array($this, '_foreach'), $script);
+    $script = preg_replace_callback('`<' . $nspace . 'foreach ar(?:ra)?y="\{\$(' . self::REGEX_PHP_ID . '(?:\.value' . self::REGEX_ARRAYS . ')?)}" as="\{\$(' . self::REGEX_PHP_ID . ')}">`', array($this, '_foreach'), $script);
 
     // -- Simple regex which doesn't need any recursive treatment.
     $not_recursives = array(
@@ -149,12 +149,12 @@ class Talus_TPL_Parser implements Talus_TPL_Parser_Interface {
 
     $recursives = array_merge($recursives, array(
       // -- Foreach values
-      '`\{(' . self::REGEX_PHP_ID . ').val(?:ue)?(' . self::REGEX_ARRAYS . ')?}`' => '<?php echo $__tpl_foreach[\'$1\'][\'value\']$2; ?>',
-      '`\{\$(' . self::REGEX_PHP_ID . ').val(?:ue)?(' . self::REGEX_ARRAYS . ')?}`' => '$__tpl_foreach[\'$1\'][\'value\']$2',
+      '`\{(' . self::REGEX_PHP_ID . ').val(?:ue)?(' . self::REGEX_ARRAYS . ')}`' => '<?php echo $__tpl_foreach[\'$1\'][\'value\']$2; ?>',
+      '`\{\$(' . self::REGEX_PHP_ID . ').val(?:ue)?(' . self::REGEX_ARRAYS . ')}`' => '$__tpl_foreach[\'$1\'][\'value\']$2',
 
       // -- Simple variables ({VAR1}, {VAR2[with][a][set][of][keys]}, ...)
-      '`\{(' . self::REGEX_PHP_ID . '(?:' . self::REGEX_ARRAYS . ')?)}`' => '<?php echo $__tpl_vars__$1; ?>',
-      '`\{\$(' . self::REGEX_PHP_ID . '(?:' . self::REGEX_ARRAYS . ')?)}`' => '$__tpl_vars__$1'
+      '`\{(' . self::REGEX_PHP_ID . self::REGEX_ARRAYS . ')}`' => '<?php echo $__tpl_vars__$1; ?>',
+      '`\{\$(' . self::REGEX_PHP_ID . self::REGEX_ARRAYS . ')}`' => '$__tpl_vars__$1'
      ));
 
     // -- No Regex (faster !)
