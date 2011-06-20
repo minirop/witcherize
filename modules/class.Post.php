@@ -50,7 +50,13 @@ class Post extends Module
 			$req->bindParam(3, $this->config['ipp'], PDO::PARAM_INT);
 			$req->execute();
 		}
-		$images = $req->fetchAll(PDO::FETCH_ASSOC);
+		$images_id = array();
+		$images = array();
+		while($fetched = $req->fetch(PDO::FETCH_ASSOC))
+		{
+			$images_id[] = $fetched['id'];
+			$images[] = $fetched;
+		}
 		$req->closeCursor();
 		
 		$req = $this->db->query('SELECT FOUND_ROWS()');
@@ -58,7 +64,7 @@ class Post extends Module
 		$req->closeCursor();
 		// END
 		
-		$req = $this->db->query('SELECT `tags`.`name`, `count`, `color` FROM `tags` JOIN `types` ON `types`.`id` = `type_id` ORDER BY `count` DESC, `tags`.`name` ASC LIMIT 20');
+		$req = $this->db->query('SELECT DISTINCT(`tags`.`name`), `count`, `color` FROM `tags` JOIN `types` ON `types`.`id` = `type_id` JOIN `images_tags` ON `tag_id` = `tags`.`id` WHERE `image_id` IN ('.implode(', ', $images_id).') ORDER BY `count` DESC, `tags`.`name` ASC LIMIT 20');
 		$tags = $req->fetchAll(PDO::FETCH_ASSOC);
 		$req->closeCursor();
 		
