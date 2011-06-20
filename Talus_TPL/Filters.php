@@ -42,6 +42,16 @@
  */
 
 final class Talus_TPL_Filters {
+  public static function desunderscored($arg){
+    return str_replace('_', ' ', $arg);
+  }
+  public static function underscored($arg){
+    return str_replace(' ', '_', $arg);
+  }
+  public static function urldecode($arg){
+    return rawurldecode($arg);
+  }
+
   /**
    * Round fractions up
    *
