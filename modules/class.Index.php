@@ -1,13 +1,13 @@
 <?php
 class Index extends Module
 {
-	public function __construct()
-	{
-	}
-	
 	public function run($data)
 	{
-		$cnt = array(4, 4, 4);
+		$req = $this->db->query('SELECT COUNT(*) FROM `images`');
+		$total_images = $req->fetchColumn(0);
+		$req->closeCursor();
+		
+		$cnt = str_split($total_images);
 		$this->tpl->set('CNT', $cnt);
 		$this->tpl->parse('index.html');
 	}

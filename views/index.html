@@ -28,6 +28,11 @@
 			padding: 5px;
 			margin: 5px;
 		}
+		
+		#footer
+		{
+			font-size: 12px;
+		}
 		</style>
 	</head>
 	<body>
@@ -35,7 +40,7 @@
 		<ul id="menu">
 			<li><a href="{ROOT_PATH}/account" title="">My Account</a></li>
 			<li><a href="{ROOT_PATH}/post" title="">Browse</a></li>
-			<li><a href="{ROOT_PATH}/faq" title="">FAQ</a></li>
+			<li><a href="{ROOT_PATH}/help" title="">Help</a></li>
 		</ul>
 		<form action="{ROOT_PATH}/search" method="post">
 			<input type="text" name="keyword" /> <input type="submit" value="Rechercher" />
@@ -43,5 +48,6 @@
 		<foreach array="{$CNT}">
 			<img src="{ROOT_PATH}/images/{CNT.value}.gif" />
 		</foreach>
+		<p id="footer">Powered by <a href="http://www.witcherize.it" style="color:#006FFA" title="">witcherize</a> v0.1</p>
 	</body>
 </html>

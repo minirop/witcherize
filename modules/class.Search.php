@@ -1,10 +1,6 @@
 <?php
 class Search extends Module
 {
-	public function __construct()
-	{
-	}
-	
 	public function run($data)
 	{
 		if(!empty($_POST['keyword']))

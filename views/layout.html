@@ -2,6 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<if cond="isset({$REDIRECT_TIME})">
+			<meta http-equiv="refresh" content="{REDIRECT_TIME};url={REDIRECT_URL}" />
+		</if>
 		<title>{TITLE}</title>
 		<link href="{ROOT_PATH}/styles/base.css" rel="stylesheet" type="text/css" media="all" />
 		<link href="{ROOT_PATH}/styles/default.css" rel="stylesheet" type="text/css" media="all" />
@@ -19,7 +22,7 @@
 				<td colspan="2" id="tabs">
 					<span<if cond="{$IN_ACCOUNT} == true"> class="active"</if>><a href="{ROOT_PATH}/account" title="">My Account</a></span>
 					<span<if cond="{$IN_POST} == true"> class="active"</if>><a href="{ROOT_PATH}/post" title="">Posts</a></span>
-					<span<if cond="{$IN_FAQ} == true"> class="active"</if>><a href="{ROOT_PATH}/faq" title="">FAQ</a></span>
+					<span<if cond="{$IN_HELP} == true"> class="active"</if>><a href="{ROOT_PATH}/help" title="">Help</a></span>
 				</td>
 			</tr>
 			<tr>
@@ -27,7 +30,7 @@
 			</tr>
 			<tr>
 				<td colspan="2" id="footer">
-					powered by <a href="http://www.witcherize.it" title="">witcherize</a> v0.1
+					Powered by <a href="http://www.witcherize.it" title="">witcherize</a> v0.1
 				</td>
 			</tr>
 		</table>

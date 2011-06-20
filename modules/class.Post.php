@@ -1,13 +1,10 @@
 <?php
 class Post extends Module
 {
-	public function __construct()
-	{
-	}
-	
 	public function run($data)
 	{
 		$this->tpl->set('IN_POST', true);
+		$this->tpl->set('SEARCH', '');
 		$this->tpl->set('MODULE', 'post.html');
 		
 		$type = count($data) ? $data[0] : '';
@@ -93,8 +90,9 @@ class Post extends Module
 	
 	private function search($values)
 	{
-		$this->tpl->set('SUB_TITLE', $values[1]);
 		$this->tpl->set('IMAGES', array());
+		$this->tpl->set('TAGS', array());
+		$this->tpl->set('SEARCH', str_replace('+', ' ', $values[1]));
 	}
 	
 	private function generate_pagination($page, $nb_page, $url)

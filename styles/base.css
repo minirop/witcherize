@@ -120,7 +120,28 @@ input[type="submit"]
 	text-align: center;
 }
 
-#error
+#connection, #flash
+{
+	padding: 20px;
+	text-align: center;
+}
+
+#flash #big
+{
+	font-size: 35px;
+}
+
+#flash #small
+{
+	font-size: 15px;
+}
+
+#connection p
+{
+	margin: 5px;
+}
+
+#error, #help
 {
 	padding: 20px;
 	font-size: 50px;
@@ -158,4 +179,19 @@ img
 .count
 {
 	color: #A0A0A0;
+}
+
+#account
+{
+	padding: 20px;
+}
+
+#account h1
+{
+	margin: 0 0 10px;
+}
+
+#account li
+{
+	list-style-type: none;
 }
