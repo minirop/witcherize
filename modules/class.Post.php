@@ -15,6 +15,7 @@ class Post extends Module
 			else
 			{
 				header('location:'.$this->config['root_path'].'/error/03');
+				exit; /* useless but it just case */
 			}
 		}
 		else if(is_numeric($type))
@@ -96,9 +97,50 @@ class Post extends Module
 	
 	private function search($values)
 	{
-		$this->tpl->set('IMAGES', array());
-		$this->tpl->set('TAGS', array());
+		$cntv = count($values);
+		$page = ($cntv > 2 ? intval($values[2]) : 1);
+		$first = abs($page - 1) * $this->config['ipp'];
+		
+		$condition = array();
+		foreach(explode('+', $values[1]) AS $keyword)
+		{
+			$condition[] = '`tags`.`name` = '.$this->db->quote($keyword, PDO::PARAM_STR);
+		}
+		$req = $this->db->prepare('SELECT SQL_CALC_FOUND_ROWS `images`.`id`, `dossier`, `image` FROM `images`
+									JOIN `images_tags` ON `images`.`id` = `image_id`
+									JOIN `tags` ON `tag_id` = `tags`.`id`
+								WHERE '.implode(' AND ', $condition).' LIMIT ?, ?');
+		$req->bindParam(1, $first, PDO::PARAM_INT);
+		$req->bindParam(2, $this->config['ipp'], PDO::PARAM_INT);
+		$req->execute();
+		
+		$images_id = array();
+		$images = array();
+		while($fetched = $req->fetch(PDO::FETCH_ASSOC))
+		{
+			$images_id[] = $fetched['id'];
+			$images[] = $fetched;
+		}
+		$req->closeCursor();
+		
+		$req = $this->db->query('SELECT FOUND_ROWS()');
+		$total_images = $req->fetchColumn(0);
+		$req->closeCursor();
+		
+		$nb_pages = ceil($total_images / $this->config['ipp']);
+		
+		$tags = array();
+		if(count($images_id))
+		{
+			$req = $this->db->query('SELECT DISTINCT(`tags`.`name`), `count`, `color` FROM `tags` JOIN `types` ON `types`.`id` = `type_id` JOIN `images_tags` ON `tag_id` = `tags`.`id` WHERE `image_id` IN ('.implode(', ', $images_id).') ORDER BY `count` DESC, `tags`.`name` ASC LIMIT 20');
+			$tags = $req->fetchAll(PDO::FETCH_ASSOC);
+			$req->closeCursor();
+		}
+		
+		$this->tpl->set('IMAGES', $images);
+		$this->tpl->set('TAGS', $tags);
 		$this->tpl->set('SEARCH', str_replace('+', ' ', $values[1]));
+		$this->tpl->set('PAGINATION', $this->generate_pagination($page, $nb_pages, 'post/search/'.$values[1]));
 	}
 	
 	private function generate_pagination($page, $nb_page, $url)

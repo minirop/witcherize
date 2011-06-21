@@ -1,20 +1,18 @@
 <?php
-if(!defined('PHP_VERSION_ID'))
+if(!defined('PHP_VERSION_ID')) /* for PHP < 5.2.7 */
 {
     $version = explode('.', PHP_VERSION);
     define('PHP_VERSION_ID', ($version[0] * 10000 + $version[1] * 100 + $version[2]));
 }
 if(PHP_VERSION_ID < 50300)
 {
-	define('__DIR__', dirname(__FILE__));
+	define('__DIR__', dirname(__FILE__)); /* for PHP < 5.3 */
 }
 
 session_start();
 
 require('config.php');
 require('Talus_TPL/Talus_TPL.php');
-
-//mb_internal_encoding('utf-8');
 
 try {
 	$db = new PDO('mysql:host='.$config['host'].';port='.$config['port'].';dbname='.$config['database'], $config['user'], $config['password'], array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
