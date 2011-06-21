@@ -1,0 +1,31 @@
+<?php
+$lang['my-account'] = 'My Account';
+$lang['search'] = 'Search';
+$lang['tags'] = 'Tags';
+$lang['no-pictures-found'] = 'No pictures found.';
+$lang['name-label'] = 'Name:';
+$lang['password-label'] = 'Password:';
+$lang['remember-me'] = 'Remember me?';
+$lang['connection'] = 'Connection';
+$lang['login-button'] = 'Login';
+$lang['register'] = 'Register';
+$lang['lost-password'] = 'Lost password';
+$lang['your-account'] = 'Your account';
+$lang['logout'] = 'Logout';
+$lang['your-profile'] = 'Your Profile';
+$lang['your-settings'] = 'Your Settings';
+$lang['browse'] = 'Browse';
+$lang['help'] = 'Help';
+$lang['posts'] = 'Posts';/*
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';*/
+?>

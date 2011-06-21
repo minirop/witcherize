@@ -1,10 +1,10 @@
 <td colspan="2" id="connection">
-	<h1>Connection</h1>
+	<h1>{LANG['connection']}</h1>
 	<form action="{ROOT_PATH}/account/check" method="post">
-		<p><label for="login">Name:</label> <input type="text" name="login" id="login" /></p>
-		<p><label for="password">Password:</label> <input type="password" name="password" id="password" /></p>
-		<p><label for="remember">Remember me?</label> <input type="checkbox" name="remember" id="remember" /></p>
-		<p><input type="submit" value="Login" /></p>
-		<p><a href="{ROOT_PATH}/account/register" title="">Register</a> - <a href="{ROOT_PATH}/account/lost+password" title="">Lost password</a></p>
+		<p><label for="login">{LANG['name-label']}</label> <input type="text" name="login" id="login" /></p>
+		<p><label for="password">{LANG['password-label']}</label> <input type="password" name="password" id="password" /></p>
+		<p><label for="remember">{LANG['remember-me']}</label> <input type="checkbox" name="remember" id="remember" /></p>
+		<p><input type="submit" value="{LANG['login-button']}" /></p>
+		<p><a href="{ROOT_PATH}/account/register" title="">{LANG['register']}</a> - <a href="{ROOT_PATH}/account/lost+password" title="">{LANG['lost-password']}</a></p>
 	</form>
 </td>

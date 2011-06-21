@@ -63,6 +63,32 @@ $tpl->set(array(
 	'IN_HELP' => false,
 ));
 
+// lang
+if(empty($_SESSION['language']))
+{
+	$languages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+	foreach($languages AS $language)
+	{
+		$lang = $language;
+		if(strpos($language, ';') !== false)
+			$lang = strstr($language, ';', true);
+		if(file_exists('lang/'.$lang.'.php'))
+		{
+			$_SESSION['language'] = $lang;
+			break;
+		}
+	}
+	
+	if(empty($_SESSION['language']))
+	{
+		$_SESSION['language'] = $config['default_lang'];
+	}
+}
+
+require('lang/'.$_SESSION['language'].'.php');
+$tpl->set('LANG', $lang);
+// END
+
 $modules = array(
 					'index' => array('Index', false),
 					'error' => array('Error', true),

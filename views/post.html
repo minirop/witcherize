@@ -1,12 +1,12 @@
 <td id="tags">
-	<h3>Search</h3>
+	<h3>{LANG['search']}</h3>
 	<div id="search">
-		<form action="{ROOT_PATH}/search" method="post">
-			<input type="text" name="keyword" value="{SEARCH}" /><br />
-			<input type="submit" value="Search" />
+		<form action="{ROOT_PATH}/search" method="post" onsubmit="return check_for_illegal_input('input-search');">
+			<input type="text" name="keyword" value="{SEARCH}" id="input-search" /><br />
+			<input type="submit" value="{LANG['search']}" />
 		</form>
 	</div>
-	<h3>Tags</h3>
+	<h3>{LANG['tags']}</h3>
 	<ul id="tag-list">
 	<foreach array="{$TAGS}">
 		<li><a href="{ROOT_PATH}/post/{TAGS.value['name']}" style="color:{TAGS.value['color']}" title="">{TAGS.value['name']|desunderscored}</a> <span class="count">{TAGS.value['count']}</span></li>
@@ -28,7 +28,7 @@
 		</foreach>
 		</div>
 	<else />
-		<div id="message">No pictures found.</div>
+		<div id="message">{LANG['no-pictures-found']}</div>
 	</if>
 <else />
 	<img src="{ROOT_PATH}/uploads/{IMAGEDATA['dossier']}/{IMAGEDATA['image']}" alt="" />

@@ -6,6 +6,7 @@
 			<meta http-equiv="refresh" content="{REDIRECT_TIME};url={REDIRECT_URL}" />
 		</if>
 		<title>{TITLE}</title>
+		<script type="text/javascript" src="{ROOT_PATH}/js/script.js"></script>
 		<link href="{ROOT_PATH}/styles/base.css" rel="stylesheet" type="text/css" media="all" />
 		<link href="{ROOT_PATH}/styles/default.css" rel="stylesheet" type="text/css" media="all" />
 	</head>
@@ -20,9 +21,9 @@
 			</tr>
 			<tr>
 				<td colspan="2" id="tabs">
-					<span<if cond="{$IN_ACCOUNT} == true"> class="active"</if>><a href="{ROOT_PATH}/account" title="">My Account</a></span>
-					<span<if cond="{$IN_POST} == true"> class="active"</if>><a href="{ROOT_PATH}/post" title="">Posts</a></span>
-					<span<if cond="{$IN_HELP} == true"> class="active"</if>><a href="{ROOT_PATH}/help" title="">Help</a></span>
+					<span<if cond="{$IN_ACCOUNT} == true"> class="active"</if>><a href="{ROOT_PATH}/account" title="">{LANG['my-account']}</a></span>
+					<span<if cond="{$IN_POST} == true"> class="active"</if>><a href="{ROOT_PATH}/post" title="">{LANG['posts']}</a></span>
+					<span<if cond="{$IN_HELP} == true"> class="active"</if>><a href="{ROOT_PATH}/help" title="">{LANG['help']}</a></span>
 				</td>
 			</tr>
 			<tr>

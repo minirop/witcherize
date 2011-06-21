@@ -120,7 +120,7 @@ class Post extends Module
 				$condition[] = $field.' '.$operator.' '.$this->db->quote($keyword, PDO::PARAM_STR);
 			}
 		}
-		print_r($condition);
+		//print_r($condition);
 		// prepare and execute the query
 		$req = $this->db->prepare('SELECT SQL_CALC_FOUND_ROWS DISTINCT(`images`.`id`), `dossier`, `image` FROM `images`
 									JOIN `images_tags` ON `images`.`id` = `image_id`
