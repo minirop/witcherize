@@ -176,6 +176,11 @@ img
 	color: white;
 }
 
+#pagination span.active a
+{
+	color: white;
+}
+
 .count
 {
 	color: #A0A0A0;

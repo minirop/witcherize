@@ -116,7 +116,7 @@ class Post extends Module
 		{
 			if(($i < $nb) || ($i > $nb_page - $nb) || (($i < $page + $nb) && ($i > $page - $nb)))
 			{
-				$list_page[] = '<span><a href="'.$this->config['root_path'].'/'.$url.'/'.$i.'" title="">'.$i.'</a></span>';
+				$list_page[] = '<span'.($i == $page ? ' class="active"' : '').'><a href="'.$this->config['root_path'].'/'.$url.'/'.$i.'" title="">'.$i.'</a></span>';
 			}
 			elseif($i >= $nb && $i <= $page - $nb)
 			{
