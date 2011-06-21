@@ -1,4 +1,9 @@
 <?php
+if(PHP_VERSION_ID < 50300)
+{
+	define('__DIR__', dirname(__FILE__));
+}
+
 session_start();
 
 require('config.php');
