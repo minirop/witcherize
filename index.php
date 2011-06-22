@@ -97,6 +97,7 @@ $modules = array(
 					'account' => array('Account', true),
 					'help' => array('Help', true),
 					'mail' => array('Mail', true),
+					'image' => array('Image', true),
 				);
 
 $removedPath = trim(substr(rawurldecode($_SERVER['REQUEST_URI']), strlen($config['root_path'])), '/');
