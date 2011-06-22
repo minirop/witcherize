@@ -126,7 +126,7 @@ class Post extends Module
 									JOIN `images_tags` ON `images`.`id` = `image_id`
 									JOIN `tags` ON `tag_id` = `tags`.`id`
 									JOIN `users` ON `user_id` = `users`.`id`
-								WHERE '.implode(' AND ', $condition).' ORDER BY `images`.`created` DESC LIMIT ?, ?');
+								WHERE '.implode(' AND ', $condition).' ORDER BY `images`.`created` DESC, `images`.`id` DESC LIMIT ?, ?');
 		$req->bindParam(1, $first, PDO::PARAM_INT);
 		$req->bindParam(2, $this->config['ipp'], PDO::PARAM_INT);
 		$req->execute();

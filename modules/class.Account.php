@@ -16,6 +16,9 @@ class Account extends Module
 				case 'logout':
 					$this->logout();
 					break;
+				case 'lost+password':
+					$this->lost_password();
+					break;
 				default:
 					{
 						header('location:'.$this->config['root_path'].'/account');
@@ -68,6 +71,16 @@ class Account extends Module
 			$this->tpl->set('REDIRECT_TIME', 99);
 		}
 		$this->tpl->set('REDIRECT_URL', $this->config['root_path'].'/account');
+		$this->tpl->set('MODULE', 'flash.html');
+	}
+	
+	private function lost_password()
+	{
+		$this->tpl->set('MODULE', 'lost_password.html');
+	}
+	
+	private function regenerate_password()
+	{
 		$this->tpl->set('MODULE', 'flash.html');
 	}
 }

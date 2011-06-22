@@ -69,12 +69,12 @@ if(empty($_SESSION['language']))
 	$languages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
 	foreach($languages AS $language)
 	{
-		$lang = $language;
+		$lang_name = $language;
 		if(strpos($language, ';') !== false)
-			$lang = strstr($language, ';', true);
-		if(file_exists('lang/'.$lang.'.php'))
+			$lang_name = strstr($language, ';', true);
+		if(file_exists('lang/'.$lang_name.'.php'))
 		{
-			$_SESSION['language'] = $lang;
+			$_SESSION['language'] = $lang_name;
 			break;
 		}
 	}
@@ -96,6 +96,7 @@ $modules = array(
 					'search' => array('Search', true),
 					'account' => array('Account', true),
 					'help' => array('Help', true),
+					'mail' => array('Mail', true),
 				);
 
 $removedPath = trim(substr(rawurldecode($_SERVER['REQUEST_URI']), strlen($config['root_path'])), '/');
@@ -129,6 +130,7 @@ $mod->tpl = &$tpl;
 $mod->db = &$db;
 $mod->config = &$config;
 $mod->user = &$userdata;
+$mod->lang = &$lang;
 $mod->run($requestURI);
 
 if($is_include)

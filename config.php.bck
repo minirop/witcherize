@@ -8,5 +8,6 @@ $config['title'] = 'My Website';
 $config['root_path'] = '/'; /* path to root of the board */
 $config['ipp'] = 20; /* images per page */
 $config['default_lang'] = 'en-US';
+$config['sending_email'] = 'no-reply@domain.com';
 $config['secret_key'] = 'kjfdsjfkpsdjfpdsjfpkdjf'; /* secret key for cookies */
 ?>

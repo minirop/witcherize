@@ -16,7 +16,11 @@ $lang['your-profile'] = 'Votre Profil';
 $lang['your-settings'] = 'Vos Paramètres';
 $lang['browse'] = 'Parcourir';
 $lang['help'] = 'Aide';
-$lang['posts'] = 'Images';/*
+$lang['posts'] = 'Images';
+$lang['lost-password-button'] = 'Regénérer mon mot de passe';
+$lang['lost-password-title'] = 'Demander un nouveau mot de passe';
+$lang['email-label'] = 'e-mail :';
+$lang['mail-regenerate-password'] = 'Vous (ou quelqu\'un d\'autre) a demandé un nouveau mot de passe. Si vous voulez le changer <a href="%s" title=""></a>, sinon, simplement supprimez cet e-mail.';
 $lang[''] = '';
 $lang[''] = '';
 $lang[''] = '';
@@ -32,7 +36,4 @@ $lang[''] = '';
 $lang[''] = '';
 $lang[''] = '';
 $lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';*/
 ?>

@@ -16,7 +16,11 @@ $lang['your-profile'] = 'Your Profile';
 $lang['your-settings'] = 'Your Settings';
 $lang['browse'] = 'Browse';
 $lang['help'] = 'Help';
-$lang['posts'] = 'Posts';/*
+$lang['posts'] = 'Posts';
+$lang['lost-password-button'] = 'Launch the regeneration';
+$lang['lost-password-title'] = 'Ask a new password';
+$lang['email-label'] = 'e-mail:';
+$lang['mail-regenerate-password'] = 'You (or at least somebody) have asked for a new password. If you want to regenerate your password <a href="%s" title="">click here</a> else just simply delete this e-mail.';
 $lang[''] = '';
 $lang[''] = '';
 $lang[''] = '';
@@ -25,7 +29,4 @@ $lang[''] = '';
 $lang[''] = '';
 $lang[''] = '';
 $lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';*/
 ?>
