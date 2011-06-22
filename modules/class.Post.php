@@ -126,7 +126,7 @@ class Post extends Module
 									JOIN `images_tags` ON `images`.`id` = `image_id`
 									JOIN `tags` ON `tag_id` = `tags`.`id`
 									JOIN `users` ON `user_id` = `users`.`id`
-								WHERE '.implode(' AND ', $condition).' LIMIT ?, ?');
+								WHERE '.implode(' AND ', $condition).' ORDER BY `images`.`created` DESC LIMIT ?, ?');
 		$req->bindParam(1, $first, PDO::PARAM_INT);
 		$req->bindParam(2, $this->config['ipp'], PDO::PARAM_INT);
 		$req->execute();
@@ -213,7 +213,6 @@ class Post extends Module
 		
 		if($page > 1)
 		{
-			$list_page[] = '<span><a href="'.$this->config['root_path'].'/'.$url.'/1" title="">&lt;&lt;</a></span>';
 			$list_page[] = '<span><a href="'.$this->config['root_path'].'/'.$url.'/'.($page-1).'" title="">&lt;</a></span>';
 		}
 		
@@ -238,7 +237,6 @@ class Post extends Module
 		if($page < $nb_page)
 		{
 			$list_page[] = '<span><a href="'.$this->config['root_path'].'/'.$url.'/'.($page+1).'" title="">&gt;</a></span>';
-			$list_page[] = '<span><a href="'.$this->config['root_path'].'/'.$url.'/'.$nb_page.'" title="">&gt;&gt;</a></span>';
 		}
 		
 		return $list_page;
