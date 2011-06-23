@@ -95,7 +95,7 @@ class Post extends Module
 	
 	private function show($id)
 	{
-		$req = $this->db->prepare('SELECT `id`, `height`, `width`, `dossier`, `image`, DATE_FORMAT(`created`, \''.$this->config['date_format'].'\') AS `created` FROM `images` WHERE `id` = ?');
+		$req = $this->db->prepare('SELECT `images`.`id`, `height`, `width`, `dossier`, `image`, `username`, DATE_FORMAT(`created`, \''.$this->config['date_format'].'\') AS `created` FROM `images` JOIN `users` ON `user_id` = `users`.`id` WHERE `images`.`id` = ?');
 		$req->execute(array($id));
 		$image = $req->fetch(PDO::FETCH_ASSOC);
 		$req->closeCursor();

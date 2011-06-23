@@ -28,5 +28,10 @@ $lang['date-posted'] = 'Posted:';
 $lang['image-size'] = 'Size:';
 $lang['statistics'] = 'Statistics';
 $lang['tags-label'] = 'Tags:';
+$lang['added-by'] = 'By:';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
+$lang[''] = '';
 $lang[''] = '';
 ?>
