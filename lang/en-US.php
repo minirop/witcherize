@@ -24,9 +24,9 @@ $lang['mail-regenerate-password'] = 'You (or at least somebody) have asked for a
 $lang['upload-image'] = 'Upload an image';
 $lang['upload'] = 'Upload';
 $lang['file-label'] = 'File:';
-$lang[''] = '';
-$lang[''] = '';
-$lang[''] = '';
+$lang['date-posted'] = 'Posted:';
+$lang['image-size'] = 'Size:';
+$lang['statistics'] = 'Statistics';
 $lang[''] = '';
 $lang[''] = '';
 ?>

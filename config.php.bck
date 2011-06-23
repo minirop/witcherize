@@ -10,4 +10,6 @@ $config['ipp'] = 20; /* images per page */
 $config['default_lang'] = 'en-US';
 $config['sending_email'] = 'no-reply@domain.com';
 $config['secret_key'] = 'kjfdsjfkpsdjfpdsjfpkdjf'; /* secret key for cookies */
+$config['date_format'] = '%d %M %Y à %Hh%i'; /* used by mysql's DAT_FORMAT */
+$config['date_lang'] = 'en_US'; /* since mysql uses underscored locale */
 ?>

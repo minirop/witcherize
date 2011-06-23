@@ -15,7 +15,9 @@ require('config.php');
 require('Talus_TPL/Talus_TPL.php');
 
 try {
-	$db = new PDO('mysql:host='.$config['host'].';port='.$config['port'].';dbname='.$config['database'], $config['user'], $config['password'], array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
+	$db = new PDO('mysql:host='.$config['host'].';port='.$config['port'].';dbname='.$config['database'], $config['user'], $config['password']);
+	$db->exec('SET NAMES utf8');
+	$db->exec("SET LC_TIME_NAMES = '".$config['date_lang']."'");
 } catch(Exception $e) {
 	die('erreur BDD');
 }

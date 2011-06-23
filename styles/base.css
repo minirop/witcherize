@@ -97,12 +97,12 @@ input[type="submit"]
 	color: white;
 }
 
-#tag-list
+.left-menu-list
 {
 	margin-left: 25px;
 }
 
-#tag-list li
+.left-menu-list li
 {
 	list-style-type: none;
 }

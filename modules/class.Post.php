@@ -3,6 +3,15 @@ class Post extends Module
 {
 	public function run($data)
 	{
+		if($this->user)
+		{
+			$this->tpl->set('IS_CONNECTED', 1);
+			if(!empty($this->user['isModo']))
+				$this->tpl->set('IS_MODO', 1);
+			if(!empty($this->user['isAdmin']))
+				$this->tpl->set('IS_ADMIN', 1);
+		}
+		
 		$this->tpl->set('IN_POST', true);
 		$this->tpl->set('SEARCH', '');
 		$this->tpl->set('MODULE', 'post.html');
@@ -81,7 +90,7 @@ class Post extends Module
 	
 	private function show($id)
 	{
-		$req = $this->db->prepare('SELECT `id`, `dossier`, `image` FROM `images` WHERE `id` = ?');
+		$req = $this->db->prepare('SELECT `id`, `height`, `width`, `dossier`, `image`, DATE_FORMAT(`created`, \''.$this->config['date_format'].'\') AS `created` FROM `images` WHERE `id` = ?');
 		$req->execute(array($id));
 		$image = $req->fetch(PDO::FETCH_ASSOC);
 		$req->closeCursor();
