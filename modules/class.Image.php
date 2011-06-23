@@ -62,15 +62,23 @@ class Image extends Module
 		$iw = imagesx($image);
 		$ih = imagesy($image);
 		// calcul thumb's dimensions
-		if($iw > $ih)
+		if($iw > 150 && $ih > 150)
 		{
-			$thw = 150;
-			$thh = intval($ih * 150 / $iw);
+			if($iw > $ih)
+			{
+				$thw = 150;
+				$thh = intval($ih * 150 / $iw);
+			}
+			else
+			{
+				$thh = 150;
+				$thw = intval($iw * 150 / $ih);
+			}
 		}
 		else
 		{
-			$thh = 150;
-			$thw = intval($iw * 150 / $ih);
+			$thh = $ih;
+			$thw = $iw;
 		}
 		// END
 		
