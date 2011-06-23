@@ -45,7 +45,7 @@ if(!empty($_COOKIE['witcherize_data']))
 
 if(!empty($_SESSION['login']) && !empty($_SESSION['password']))
 {
-	$req = $db->prepare('SELECT * FROM `users` JOIN `groups` ON `groups`.`id` = `group_id` WHERE `username` = ? AND `password` = ? LIMIT 1');
+	$req = $db->prepare('SELECT `users`.`id`, `username`, `group_id`, `isModo`, `isAdmin` FROM `users` JOIN `groups` ON `groups`.`id` = `group_id` WHERE `username` = ? AND `password` = ? LIMIT 1');
 	$req->execute(array(
 		$_SESSION['login'],
 		$_SESSION['password']
