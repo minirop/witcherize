@@ -74,9 +74,14 @@ class Post extends Module
 		$req->closeCursor();
 		// END
 		
-		$req = $this->db->query('SELECT DISTINCT(`tags`.`name`), `count`, `color` FROM `tags` JOIN `types` ON `types`.`id` = `type_id` JOIN `images_tags` ON `tag_id` = `tags`.`id` WHERE `image_id` IN ('.implode(', ', $images_id).') ORDER BY `tags`.`name` ASC LIMIT 20');
-		$tags = $req->fetchAll(PDO::FETCH_ASSOC);
-		$req->closeCursor();
+		if(count($images_id))
+		{
+			$req = $this->db->query('SELECT DISTINCT(`tags`.`name`), `count`, `color` FROM `tags` JOIN `types` ON `types`.`id` = `type_id` JOIN `images_tags` ON `tag_id` = `tags`.`id` WHERE `image_id` IN ('.implode(', ', $images_id).') ORDER BY `tags`.`name` ASC LIMIT 20');
+			$tags = $req->fetchAll(PDO::FETCH_ASSOC);
+			$req->closeCursor();
+		}
+		else
+			$tags = array();
 		
 		$nb_pages = ceil($total_images / $this->config['ipp']);
 		
