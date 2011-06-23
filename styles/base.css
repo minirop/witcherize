@@ -200,3 +200,9 @@ img
 {
 	list-style-type: none;
 }
+
+#tags-upload
+{
+	width: 350px;
+	height: 150px;
+}

@@ -27,6 +27,6 @@ $lang['file-label'] = 'File:';
 $lang['date-posted'] = 'Posted:';
 $lang['image-size'] = 'Size:';
 $lang['statistics'] = 'Statistics';
-$lang[''] = '';
+$lang['tags-label'] = 'Tags:';
 $lang[''] = '';
 ?>

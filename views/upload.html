@@ -2,6 +2,10 @@
 	<h1>{LANG['upload-image']}</h1>
 	<form action="{ROOT_PATH}/image/uploaded" method="post" enctype="multipart/form-data">
 		<p><label for="file">{LANG['file-label']}</label> <input type="file" name="file" id="file" /></p>
+		<p>
+			<label for="tags-upload">{LANG['tags-label']}</label><br />
+			<textarea name="tags" id="tags-upload"></textarea>
+		</p>
 		<p><input type="submit" value="{LANG['upload']}" /></p>
 	</form>
 </td>
