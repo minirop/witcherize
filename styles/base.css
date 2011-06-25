@@ -136,7 +136,12 @@ input[type="submit"]
 	font-size: 15px;
 }
 
-#connection p, #lost-password p, #register p
+#profile
+{
+	padding: 20px;
+}
+
+#connection p, #lost-password p, #register p, #profile p
 {
 	margin: 5px;
 }
