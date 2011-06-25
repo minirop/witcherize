@@ -16,6 +16,9 @@ class Account extends Module
 				case 'logout':
 					$this->logout();
 					break;
+				case 'register':
+					$this->register();
+					break;
 				case 'lost+password':
 					$this->lost_password();
 					break;
@@ -82,6 +85,73 @@ class Account extends Module
 	private function regenerate_password()
 	{
 		$this->tpl->set('MODULE', 'flash.html');
+	}
+	
+	private function register()
+	{
+		if(!empty($_POST))
+		{
+			$mandatory_fields = array('name', 'password', 'email');
+			$all = true;
+			foreach($mandatory_fields AS $v)
+			{
+				if(empty($_POST[$v]))
+					$all = false;
+			}
+			
+			if($all)
+			{
+				$req = $this->db->prepare('SELECT COUNT(*) FROM `users` WHERE LOWER(`username`) = LOWER(?) OR LOWER(`email`) = LOWER(?) LIMIT 1');
+				$req->execute(array($_POST['name'], $_POST['email']));
+				$totalMembre = $req->fetchColumn(0);
+				$req->closeCursor();
+				
+				$hasError = false;
+				
+				if($totalMembre)
+				{
+					$this->tpl->set('FLASH_MESSAGE', 'Username or e-mail alreay in use.');
+					$hasError = true;
+				}
+				
+				// 2 to 6 for extension 'cause .travel (even if not (really) use for now)
+				if(!preg_match('/.+@[\.a-zA-Z0-9-]+\.[a-zA-Z]{2,6}/', $_POST['email']))
+				{
+					$this->tpl->set('FLASH_MESSAGE', 'Invalid e-mail already in use.');
+					$hasError = true;
+				}
+				
+				if($hasError)
+				{
+					$this->tpl->set('REDIRECT_URL', $this->config['root_path'].'/account/register');
+					$this->tpl->set('REDIRECT_TIME', 10);
+					$this->tpl->set('MODULE', 'flash.html');
+					return;
+				}
+				
+				$req = $this->db->prepare('INSERT INTO `users` VALUES (NULL, ?, SHA1(?), ?, 1)');
+				$req->execute(array(
+					$_POST['name'],
+					$_POST['password'],
+					$_POST['email'],
+				));
+				$req->closeCursor();
+				
+				$this->tpl->set('FLASH_MESSAGE', 'Registration successful.');
+				$this->tpl->set('REDIRECT_URL', $this->config['root_path'].'/account');
+			}
+			else
+			{
+				$this->tpl->set('FLASH_MESSAGE', 'All fields are mandatory.');
+				$this->tpl->set('REDIRECT_URL', $this->config['root_path'].'/account/register');
+			}
+			$this->tpl->set('REDIRECT_TIME', 5);
+			$this->tpl->set('MODULE', 'flash.html');
+		}
+		else
+		{
+			$this->tpl->set('MODULE', 'register.html');
+		}
 	}
 }
 ?>

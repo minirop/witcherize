@@ -120,7 +120,7 @@ input[type="submit"]
 	text-align: center;
 }
 
-#connection, #flash, #lost-password, #upload
+#connection, #flash, #lost-password, #upload, #register
 {
 	padding: 20px;
 	text-align: center;
@@ -136,7 +136,7 @@ input[type="submit"]
 	font-size: 15px;
 }
 
-#connection p
+#connection p, #lost-password p, #register p
 {
 	margin: 5px;
 }
