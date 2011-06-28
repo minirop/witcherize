@@ -119,6 +119,8 @@ class Post extends Module
 		
 		// creating the condition
 		$condition = array();
+		$tags_jointures = '';
+		$tag_jointure_id = 1;
 		foreach(explode('+', $values[1]) AS $keyword)
 		{
 			$field = '`tags`.`name`';
@@ -127,6 +129,15 @@ class Post extends Module
 			{
 				$this->parse_special_keyword($field, $keyword, $operator);
 			}
+			
+			if($field == '`tags`.`name`')
+			{
+				$field = str_replace('`tags`', '`tags_'.$tag_jointure_id.'`', $field);
+				$tags_jointures .= 'JOIN `images_tags` `images_tags_'.$tag_jointure_id.'` ON `images`.`id` = `images_tags_'.$tag_jointure_id.'`.`image_id`
+									JOIN `tags` AS `tags_'.$tag_jointure_id.'` ON `images_tags_'.$tag_jointure_id.'`.`tag_id` = `tags_'.$tag_jointure_id.'`.`id` ';
+				$tag_jointure_id++;
+			}
+			
 			if(strpos($keyword, '*') !== false)
 			{
 				$condition[] = $field.' LIKE '.$this->db->quote(str_replace('*', '%', $keyword), PDO::PARAM_STR);
@@ -136,11 +147,19 @@ class Post extends Module
 				$condition[] = $field.' '.$operator.' '.$this->db->quote($keyword, PDO::PARAM_STR);
 			}
 		}
-		//print_r($condition);
+		
+		if($tag_jointure_id > 4) // avoid mega complex query (4-1 so 3 keywords)
+		{
+			$this->tpl->set('FLASH_MESSAGE', 'Maximum of 3 keywords.');
+			$this->tpl->set('REDIRECT_URL', $this->config['root_path'].'/post');
+			$this->tpl->set('REDIRECT_TIME', 10);
+			$this->tpl->set('MODULE', 'flash.html');
+			return;
+		}
+		
 		// prepare and execute the query
 		$req = $this->db->prepare('SELECT SQL_CALC_FOUND_ROWS DISTINCT(`images`.`id`), `dossier`, `image` FROM `images`
-									JOIN `images_tags` ON `images`.`id` = `image_id`
-									JOIN `tags` ON `tag_id` = `tags`.`id`
+									'.$tags_jointures.'
 									JOIN `users` ON `user_id` = `users`.`id`
 								WHERE '.implode(' AND ', $condition).' ORDER BY `images`.`created` DESC, `images`.`id` DESC LIMIT ?, ?');
 		$req->bindParam(1, $first, PDO::PARAM_INT);
