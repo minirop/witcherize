@@ -59,6 +59,8 @@ class Post extends Module
 			$req->bindParam(2, $first, PDO::PARAM_INT);
 			$req->bindParam(3, $this->config['ipp'], PDO::PARAM_INT);
 			$req->execute();
+			
+			$this->tpl->set('SEARCH', $word);
 		}
 		$images_id = array();
 		$images = array();
