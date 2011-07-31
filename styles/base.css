@@ -156,6 +156,7 @@ input[type="submit"]
 img
 {
 	vertical-align: bottom;
+	border: 0;
 }
 
 #pagination
@@ -209,5 +210,17 @@ img
 #tags-upload
 {
 	width: 350px;
+	height: 150px;
+}
+
+#image-data
+{
+	display: none;
+	margin-top: 20px;
+}
+
+#image-data textarea
+{
+	width: 450px;
 	height: 150px;
 }

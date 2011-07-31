@@ -107,8 +107,15 @@ class Post extends Module
 		$tags = $req->fetchAll(PDO::FETCH_ASSOC);
 		$req->closeCursor();
 		
+		$tag_list = array();
+		foreach($tags AS $tag)
+		{
+			$tag_list[] = $tag['name'];
+		}
+		
 		$this->tpl->set('IMAGEDATA', $image);
 		$this->tpl->set('TAGS', $tags);
+		$this->tpl->set('TAGS_LIST', implode(' ', $tag_list));
 	}
 	
 	private function search($values)

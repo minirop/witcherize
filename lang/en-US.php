@@ -31,7 +31,7 @@ $lang['tags-label'] = 'Tags:';
 $lang['added-by'] = 'By:';
 $lang['register-title'] = 'Registration';
 $lang['register-button'] = 'Register';
-$lang[''] = '';
+$lang['edit-image'] = 'Edit this image';
 $lang[''] = '';
 $lang[''] = '';
 ?>

@@ -24,7 +24,7 @@
 		<if cond="!empty({$IS_CONNECTED})">
 			<h3>Gestion</h3>
 			<ul class="left-menu-list">
-				<li>Éditer</li>
+				<li><a href="" id="edit-link" title="">Éditer</li>
 				<if cond="!empty({$IS_MODO})">
 					<li>Supprimer</li>
 				</if>
@@ -48,5 +48,12 @@
 	</if>
 <else />
 	<img src="{ROOT_PATH}/uploads/{IMAGEDATA['dossier']}/{IMAGEDATA['image']}" alt="" />
+	<div id="image-data">
+		<h2>{LANG['edit-image']}</h2>
+		<form action="{ROOT_PATH}/image/edit/{IMAGEDATA['id']}" method="post">
+			<textarea name="tags">{TAGS_LIST}</textarea>
+			<p><input type="submit" value="Envoyer" /></p>
+		</form>
+	</div>
 </if>
 </td>

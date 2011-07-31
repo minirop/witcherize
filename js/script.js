@@ -16,3 +16,10 @@ function check_for_illegal_input(id)
 	
 	return true;
 }
+
+$(document).ready(function() {
+	$('#edit-link').click(function(ev) {
+		$('#image-data').toggle();
+		ev.preventDefault();
+	});
+});

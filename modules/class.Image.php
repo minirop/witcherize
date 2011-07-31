@@ -17,6 +17,101 @@ class Image extends Module
 			case 'upload':
 				$this->tpl->set('MODULE', 'upload.html');
 				break;
+			case 'edit':
+				if(!empty($data[1]) && is_numeric($data[1]))
+				{
+					$this->edit_image($data[1]);
+				}
+				else
+				{
+					$this->tpl->set('REDIRECT_TIME', 5);
+					$this->tpl->set('REDIRECT_URL', $this->config['root_path'].'/post');
+					$this->tpl->set('FLASH_MESSAGE', 'Invalid image identifier.');
+					$this->tpl->set('MODULE', 'flash.html');
+				}
+				break;
+			default:
+				$this->tpl->set('REDIRECT_TIME', 5);
+				$this->tpl->set('REDIRECT_URL', $this->config['root_path'].'/post');
+				$this->tpl->set('FLASH_MESSAGE', 'What do you want to do ?');
+				$this->tpl->set('MODULE', 'flash.html');
+		}
+	}
+	
+	private function edit_image($id)
+	{
+		$req = $this->db->prepare('SELECT COUNT(*) FROM `images` WHERE `images`.`id` = ?');
+		$req->execute(array($id));
+		$image = $req->fetchColumn();
+		$req->closeCursor();
+		
+		if($image)
+		{
+			$tags = explode(' ', $_POST['tags']);
+			$current_tags = array();
+			$req = $this->db->prepare('SELECT `name` FROM `tags` JOIN `images_tags` ON `tag_id` = `tags`.`id` WHERE `image_id` = ? ORDER BY `tags`.`name` ASC');
+			$req->execute(array($id));
+			while($t = $req->fetch(PDO::FETCH_ASSOC))
+			{
+				$current_tags[] = $t['name'];
+			}
+			$req->closeCursor();
+			
+			$t1 = array_diff($current_tags, $tags); // les tags supprimés
+			$t2 = array_diff($tags, $current_tags); // les tags ajoutés
+			
+			$callback = function(&$item, $key)
+			{
+				$item = strtolower($item);
+				$item = preg_replace('/[^a-z0-9_-]/', '', $item);
+			};
+			
+			array_walk($t2, $callback);
+			$t2 = array_filter($t2);
+			
+			if(count($t1))
+			{
+				$delete_tags = array();
+				foreach($t1 AS $tagname)
+				{
+					$req = $this->db->prepare("SELECT `id` FROM `tags` WHERE `name` = ?");
+					$req->execute(array($tagname));
+					$delete_tags[] = $req->fetchColumn(0);
+					$req->closeCursor();
+				}
+				
+				$this->db->exec("UPDATE `tags` WHERE `count` = `count` - 1 WHERE `tag_id` IN(".implode(', ', $delete_tags).")");
+				$this->db->exec("DELETE FROM `images_tags` WHERE `image_id` = ".intval($id)." AND `tag_id` IN(".implode(', ', $delete_tags).")");
+			}
+			
+			if(count($t2))
+			{
+				foreach($t2 AS $tagname)
+				{
+					$this->db->exec("INSERT INTO `tags` (`name`, `type_id`, `count`) VALUES ('".$tagname."', 1, 1) ON DUPLICATE KEY UPDATE `count` = `count`+1");
+					
+					$req = $this->db->prepare("SELECT `id` FROM `tags` WHERE `name` = ?");
+					$req->execute(array($tagname));
+					$tagid = $req->fetchColumn(0);
+					$req->closeCursor();
+					
+					$req = $this->db->prepare('INSERT INTO `images_tags` (`tag_id`, `image_id`) VALUES (?, ?)');
+					$req->execute(array($tagid, $id));
+					$req->closeCursor();
+				}
+			}
+			
+			$this->tpl->set('REDIRECT_TIME', 5);
+			$this->tpl->set('REDIRECT_URL', $this->config['root_path'].'/post/');
+			$this->tpl->set('FLASH_MESSAGE', 'Edition complete.');
+			$this->tpl->set('MODULE', 'flash.html');
+		}
+		else
+		{
+			$this->tpl->set('REDIRECT_TIME', 5);
+			$this->tpl->set('REDIRECT_URL', $this->config['root_path'].'/post');
+			$this->tpl->set('FLASH_MESSAGE', 'You can\'t edit an image that doesn\'t exists.');
+			$this->tpl->set('MODULE', 'flash.html');
 		}
 	}
 	
@@ -116,7 +211,7 @@ class Image extends Module
 				$req->closeCursor();
 				$tag_last_id = $this->db->lastInsertId();
 				
-				$req = $this->db->prepare('INSERT INTO `images_tags` (`id`, `tag_id`, `image_id`) VALUES (NULL, ?, ?)');
+				$req = $this->db->prepare('INSERT INTO `images_tags` (`tag_id`, `image_id`) VALUES (NULL, ?, ?)');
 				$req->execute(array($tag_last_id, $last_insert_id));
 				$req->closeCursor();
 			}
