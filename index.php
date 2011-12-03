@@ -12,7 +12,12 @@ if(PHP_VERSION_ID < 50300)
 session_start();
 
 require('config.php');
-require('Talus_TPL/Talus_TPL.php');
+//require('lib/Link/Loader/Filesystem.php');
+//require('lib/Link/Cache/Filesystem.php');
+require('lib/Link/Autoloader.php');
+Link_Autoloader::register();
+
+require('lib/Link/Environnement.php');
 
 try {
 	$db = new PDO('mysql:host='.$config['host'].';port='.$config['port'].';dbname='.$config['database'], $config['user'], $config['password']);
@@ -55,7 +60,7 @@ if(!empty($_SESSION['login']) && !empty($_SESSION['password']))
 }
 // END
 
-$tpl = new Talus_TPL(__DIR__.'/views/', __DIR__.'/cache/');
+$tpl = new Link_Environnement(new Link_Loader_Filesystem(__DIR__.'/views'), new Link_Cache_Filesystem(__DIR__.'/cache'));
 $tpl->set(array(
 	'TITLE' => $config['title'],
 	'ROOT_PATH' => $config['root_path'],
