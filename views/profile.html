@@ -2,4 +2,9 @@
 	<h1>Profile of {USERDATA['username']}</h1>
 	<p>Group: {USERDATA['name']}</p>
 	<p>Uploaded: {USERDATA['count_images']} images <a href="{ROOT_PATH}/post/search/user:{USERDATA['username']}" title="">»</a></p>
+	<p>
+		<foreach array="{$USERDATA['last_images']}" as="{$IMAGE}">
+			<span class="outline-image"><a href="{ROOT_PATH}/post/{IMAGE.value['id']}" title=""><img src="{ROOT_PATH}/uploads/{IMAGE.value['dossier']}/th/{IMAGE.value['image']}" alt="" /></a></span>
+		</foreach>
+	</p>
 </td>

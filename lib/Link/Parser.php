@@ -43,7 +43,7 @@ class Link_Parser implements Link_Interface_Parser {
 
     // -- Regex used
     REGEX_PHP_ID = '[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*', // PHP Identifier
-    REGEX_PHP_SUFFIX = '(?:\[[^]]+?]|->[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)*'; // PHP Suffixes (arrays, objects)
+    REGEX_PHP_SUFFIX = '(?:\[[^]]+?\]|->[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)*'; // PHP Suffixes (arrays, objects)
 
   protected
     $_compact = false,
@@ -126,7 +126,7 @@ class Link_Parser implements Link_Interface_Parser {
 
     // -- <foreach> tags
     $script = preg_replace_callback('`<foreach ar(?:ra)?y="\{\$(' . self::REGEX_PHP_ID . ')}">`', array($this, '_foreach'), $script);
-    $script = preg_replace_callback('`<foreach ar(?:ra)?y="\{\$(' . self::REGEX_PHP_ID . '(?:\.val(?:ue)?' . self::REGEX_PHP_SUFFIX . ')?)}" as="\{\$(' . self::REGEX_PHP_ID . ')}">`', array($this, '_foreach'), $script);
+    $script = preg_replace_callback('`<foreach ar(?:ra)?y="\{\$(' . self::REGEX_PHP_ID . '(?:(?:\.val(?:ue)?)?' . self::REGEX_PHP_SUFFIX . ')?)}" as="\{\$(' . self::REGEX_PHP_ID . ')}">`', array($this, '_foreach'), $script);
 
     // -- Simple regex which doesn't need any recursive treatment.
     $not_recursives = array(

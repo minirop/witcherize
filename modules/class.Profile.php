@@ -27,6 +27,11 @@ class Profile extends Module
 			$userdata['count_images'] = $req->fetchColumn(0);
 			$req->closeCursor();
 			
+			$req = $this->db->prepare('SELECT * FROM `images` WHERE `user_id` = ? ORDER BY `id` DESC LIMIT 5');
+			$req->execute(array($userdata['id']));
+			$userdata['last_images'] = $req->fetchAll(PDO::FETCH_ASSOC);
+			$req->closeCursor();
+			
 			$this->tpl->set('USERDATA', $userdata);
 			$this->tpl->set('MODULE', 'profile.html');
 		}
