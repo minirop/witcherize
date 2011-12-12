@@ -12,8 +12,6 @@ if(PHP_VERSION_ID < 50300)
 session_start();
 
 require('config.php');
-//require('lib/Link/Loader/Filesystem.php');
-//require('lib/Link/Cache/Filesystem.php');
 require('lib/Link/Autoloader.php');
 Link_Autoloader::register();
 
