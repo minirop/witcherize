@@ -71,7 +71,7 @@ class Account extends Module
 		else
 		{
 			$this->tpl->set('FLASH_MESSAGE', 'The couple user/password does not exists.');
-			$this->tpl->set('REDIRECT_TIME', 99);
+			$this->tpl->set('REDIRECT_TIME', 15);
 		}
 		$this->tpl->set('REDIRECT_URL', $this->config['root_path'].'/account');
 		$this->tpl->set('MODULE', 'flash.html');
@@ -113,7 +113,7 @@ class Account extends Module
 					$error = 'Username or e-mail alreay in use.';
 				}
 				
-				// 2 to 6 for extension 'cause .travel (even if not (really) use for now)
+				// 2 to 6 for extension 'cause .travel (even if not (really) used for now)
 				if(!preg_match('/.+@[\.a-zA-Z0-9-]+\.[a-zA-Z]{2,6}/', $_POST['email']))
 				{
 					$error = 'Invalid e-mail already in use.';
