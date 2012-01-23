@@ -3,6 +3,8 @@ class Mail extends Module
 {
 	public function run($data)
 	{
+		parent::run($data);
+		
 		if(!count($data))
 		{
 			header('location:'.$this->config['root_path'].'/post');

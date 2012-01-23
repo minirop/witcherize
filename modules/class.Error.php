@@ -13,6 +13,8 @@ class Error extends Module
 	
 	public function run($data)
 	{
+		parent::run($data);
+		
 		$this->tpl->set('SUB_TITLE', 'ERROR');
 		$this->tpl->set('ERR_MSG', (count($data) && isset($this->messages[$data[0]]) ? $this->messages[$data[0]] : $this->messages['00']));
 		$this->tpl->set('MODULE', 'error.html');

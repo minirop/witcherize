@@ -3,6 +3,8 @@ class Account extends Module
 {
 	public function run($data)
 	{
+		parent::run($data);
+		
 		$this->tpl->set('IN_ACCOUNT', true);
 		$this->tpl->set('USER', $this->user);
 		

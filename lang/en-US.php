@@ -32,6 +32,7 @@ $lang['added-by'] = 'By:';
 $lang['register-title'] = 'Registration';
 $lang['register-button'] = 'Register';
 $lang['edit-image'] = 'Edit this image';
+$lang['admin'] = 'Admin';
 $lang[''] = '';
 $lang[''] = '';
 ?>

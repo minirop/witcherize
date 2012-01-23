@@ -3,6 +3,8 @@ class Profile extends Module
 {
 	public function run($data)
 	{
+		parent::run($data);
+		
 		$error = '';
 		if(count($data))
 		{

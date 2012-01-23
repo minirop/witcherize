@@ -66,6 +66,7 @@ $tpl->set(array(
 	'IN_ACCOUNT' => false,
 	'IN_POST' => false,
 	'IN_HELP' => false,
+	'IN_ADMIN' => false,
 ));
 
 // lang

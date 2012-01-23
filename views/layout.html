@@ -26,6 +26,9 @@
 					<span<if cond="{$IN_ACCOUNT} == true"> class="active"</if>><a href="{ROOT_PATH}/account" title="">{LANG['my-account']}</a></span>
 					<span<if cond="{$IN_POST} == true"> class="active"</if>><a href="{ROOT_PATH}/post" title="">{LANG['posts']}</a></span>
 					<span<if cond="{$IN_HELP} == true"> class="active"</if>><a href="{ROOT_PATH}/help" title="">{LANG['help']}</a></span>
+					<if cond="!empty({$IS_ADMIN})">
+						<span<if cond="{$IN_ADMIN} == true"> class="active"</if>><a href="{ROOT_PATH}/admin" title="">{LANG['admin']}</a></span>
+					</if>
 				</td>
 			</tr>
 			<tr>

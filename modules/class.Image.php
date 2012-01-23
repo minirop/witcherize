@@ -3,6 +3,8 @@ class Image extends Module
 {
 	public function run($data)
 	{
+		parent::run($data);
+		
 		if(!count($data) || !$this->user)
 		{
 			header('location:'.$this->config['root_path'].'/account');

@@ -3,6 +3,8 @@ class Search extends Module
 {
 	public function run($data)
 	{
+		parent::run($data);
+		
 		if(!empty($_POST['keyword']))
 		{
 			$search = str_replace(' ', '+', $_POST['keyword']);
