@@ -47,7 +47,10 @@ class Image extends Module
 		
 		if($image)
 		{
-			$tags = explode(' ', $_POST['tags']);
+			$tags = $_POST['tags'];
+			$tags = str_replace(array("\r", "\n"), ' ', $tags);
+			$tags = preg_replace('/ {2,}/', ' ', $tags);
+			$tags = explode(' ', $tags);
 			$current_tags = array();
 			$req = $this->db->prepare('SELECT `name` FROM `tags` JOIN `images_tags` ON `tag_id` = `tags`.`id` WHERE `image_id` = ? ORDER BY `tags`.`name` ASC');
 			$req->execute(array($id));
@@ -80,7 +83,7 @@ class Image extends Module
 					$req->closeCursor();
 				}
 				
-				$this->db->exec("UPDATE `tags` WHERE `count` = `count` - 1 WHERE `tag_id` IN(".implode(', ', $delete_tags).")");
+				$this->db->exec("UPDATE `tags` SET `count` = `count` - 1 WHERE `id` IN(".implode(', ', $delete_tags).")");
 				$this->db->exec("DELETE FROM `images_tags` WHERE `image_id` = ".intval($id)." AND `tag_id` IN(".implode(', ', $delete_tags).")");
 			}
 			
