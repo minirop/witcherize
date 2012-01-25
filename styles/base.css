@@ -146,7 +146,7 @@ input[type="submit"]
 	margin: 5px;
 }
 
-#error, #help
+#error, #help, #admin
 {
 	padding: 20px;
 	font-size: 50px;
