@@ -216,7 +216,7 @@ class Image extends Module
 				$req->closeCursor();
 				$tag_last_id = $this->db->lastInsertId();
 				
-				$req = $this->db->prepare('INSERT INTO `images_tags` (`tag_id`, `image_id`) VALUES (NULL, ?, ?)');
+				$req = $this->db->prepare('INSERT INTO `images_tags` (`tag_id`, `image_id`) VALUES (?, ?)');
 				$req->execute(array($tag_last_id, $last_insert_id));
 				$req->closeCursor();
 			}
