@@ -122,6 +122,11 @@ class Image extends Module
 	
 	private function upload_file()
 	{
+		$savefunctions['.jpg'] = 'imagejpeg';
+		$savefunctions['.jpeg'] = 'imagejpeg';
+		$savefunctions['.png'] = 'imagepng';
+		$savefunctions['.gif'] = 'imagegif';
+		
 		if(empty($_FILES['file']))
 		{
 			header('location:'.$this->config['root_path'].'/image/upload');
@@ -139,11 +144,17 @@ class Image extends Module
 		
 		$md5file = md5_file($_FILES['file']['tmp_name']);
 		$extension = substr($_FILES['file']['name'], strrpos($_FILES['file']['name'], '.'));
+		if(!isset($savefunctions[$extension]))
+		{
+			die('file format not supported.');
+		}
+		$saveimage = $savefunctions[$extension];
 		
 		$dir = substr($md5file, 0, 2);
 		if(!is_dir('uploads/'.$dir))
 		{
 			mkdir('uploads/'.$dir.'/th', 0777, true);
+			mkdir('uploads/'.$dir.'/samples', 0777, true);
 		}
 		
 		if(is_file('uploads/'.$dir.'/'.$md5file.$extension))
@@ -162,31 +173,47 @@ class Image extends Module
 		$iw = imagesx($image);
 		$ih = imagesy($image);
 		// calcul thumb's dimensions
-		if($iw > 150 && $ih > 150)
+		if($iw > $ih)
 		{
-			if($iw > $ih)
-			{
-				$thw = 150;
-				$thh = intval($ih * 150 / $iw);
-			}
-			else
-			{
-				$thh = 150;
-				$thw = intval($iw * 150 / $ih);
-			}
+			$thw = 150;
+			$thh = intval($ih * 150 / $iw);
 		}
 		else
 		{
-			$thh = $ih;
-			$thw = $iw;
+			$thh = 150;
+			$thw = intval($iw * 150 / $ih);
 		}
 		// END
 		
-		$image_th = imagecreatetruecolor($thw, $thh);
+		$image_has_sample = 0;
 		if(move_uploaded_file($_FILES['file']['tmp_name'], 'uploads/'.$dir.'/'.$md5file.$extension))
 		{
-			imagecopyresampled($image_th, $image, 0, 0, 0, 0, $thw, $thh, imagesx($image), imagesy($image));
-			imagejpeg($image_th, 'uploads/'.$dir.'/th/'.$md5file.$extension);
+			$image_th = $this->create_transparent_image($thw, $thh);
+			imagecopyresampled($image_th, $image, 0, 0, 0, 0, $thw, $thh, $iw, $ih);
+			$saveimage($image_th, 'uploads/'.$dir.'/th/'.$md5file.$extension);
+			imagedestroy($image_th);
+			
+			// if the picture is too big, create a small version
+			if($iw > 1000 || $ih > 1000)
+			{
+				if($iw > $ih)
+				{
+					$samplew = 1000;
+					$sampleh = intval($ih * 1000 / $iw);
+				}
+				else
+				{
+					$sampleh = 1000;
+					$samplew = intval($iw * 1000 / $ih);
+				}
+				
+				$image_sample = $this->create_transparent_image($samplew, $sampleh);
+				imagecopyresampled($image_sample, $image, 0, 0, 0, 0, $samplew, $sampleh, $iw, $ih);
+				$saveimage($image_sample, 'uploads/'.$dir.'/samples/'.$md5file.$extension);
+				imagedestroy($image_sample);
+				
+				$image_has_sample = 1;
+			}
 		}
 		else
 		{
@@ -194,13 +221,14 @@ class Image extends Module
 			die('error while uploading the picture');
 		}
 		
-		$req = $this->db->prepare('INSERT INTO `images`(`image`, `dossier`, `user_id`, `created`, `width`, `height`) VALUES(?, ?, ?, NOW(), ?, ?)');
+		$req = $this->db->prepare('INSERT INTO `images`(`image`, `dossier`, `user_id`, `created`, `width`, `height`, `has_sample`) VALUES(?, ?, ?, NOW(), ?, ?, ?)');
 		$req->execute(array(
 			$md5file.$extension,
 			$dir,
 			$this->user['id'],
 			$iw,
-			$ih
+			$ih,
+			$image_has_sample
 		));
 		$req->closeCursor();
 		$last_insert_id = $this->db->lastInsertId();
@@ -246,6 +274,17 @@ class Image extends Module
 		}
 		
 		return $image;
+	}
+	
+	private function create_transparent_image($width, $height)
+	{
+		$tmp_image = imagecreatetruecolor($width, $height);
+		imagealphablending($tmp_image, false);
+		imagesavealpha($tmp_image, true);
+		$transparent = imagecolorallocatealpha($tmp_image, 255, 255, 255, 127);
+		imagefilledrectangle($tmp_image, 0, 0, $width, $height, $transparent);
+		
+		return $tmp_image;
 	}
 }
 ?>

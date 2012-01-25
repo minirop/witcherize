@@ -47,7 +47,7 @@
 		<div id="message">{LANG['no-images-found']}</div>
 	</if>
 <else />
-	<img src="{ROOT_PATH}/uploads/{IMAGEDATA['dossier']}/{IMAGEDATA['image']}" alt="" />
+	<img src="{ROOT_PATH}/uploads/{IMAGEDATA['dossier']}/<if cond="{$IMAGEDATA['has_sample']}">samples/</if>{IMAGEDATA['image']}" alt="" />
 	<div id="image-data">
 		<h2>{LANG['edit-image']}</h2>
 		<form action="{ROOT_PATH}/image/edit/{IMAGEDATA['id']}" method="post">
