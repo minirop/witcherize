@@ -19,7 +19,14 @@ function check_for_illegal_input(id)
 
 $(document).ready(function() {
 	$('#edit-link').click(function(ev) {
-		$('#image-data').toggle();
+		$('#image-data').toggle(function(ev) {
+			if($(this).is(':visible'))
+			{
+				$('html, body').animate({
+					scrollTop: $(document).height()
+				}, 1000);
+			}
+		});
 		ev.preventDefault();
 	});
 });
